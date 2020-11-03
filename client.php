@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * Gittigidiyor Api Client v2.3
  *
@@ -22,6 +23,7 @@
 
 class ggClient{
 	
+	
 	protected $apiKey;
 	protected $secretKey;
 	protected $nick;
@@ -33,13 +35,7 @@ class ggClient{
 	protected $auth_pass;
 	
 	
-	/**
-	 * Create gg client and configure
-	 * 
-	 * @param string $requestType
-	 * @param string $responseType
-	 * @param string $lang
-	 */
+	
 	public function __construct(){
 		$ini_array = parse_ini_file("config.ini");
 		
@@ -57,7 +53,7 @@ class ggClient{
 		$this->sign = md5($this->apiKey.$this->secretKey.$this->time);	
 		
 	}
-	
+
 	
 	
 	//Start Application Service
@@ -287,7 +283,26 @@ class ggClient{
 	public function getCategoryVariantSpecs($categoryCode = null){
 		return $this->clientConnect('anonymous','Category','getCategoryVariantSpecs',get_defined_vars());
 	}
+	public function getCategorySpecsWithDetail($categoryCode = null){
+		return $this->clientConnect('anonymous','Category','getCategorySpecsWithDetail',get_defined_vars());
 	
+	}
+	public function getRequiredCategorySpecs($categoryCode ){
+		return $this->clientConnect('anonymous','Category','CategoryV2Service',get_defined_vars());
+	}
+	public function getParentCategories($withSpecs, $withDeepest, $withCatalog){
+		return $this->clientConnect('anonymous','Category','getParentCategories',get_defined_vars());
+	}
+	public function getSubCategories($categoryCode, $withSpecs, $withDeepest, $withCatalog){
+		return $this->clientConnect('anonymous','Category','getSubCategories',get_defined_vars());
+	}
+	public function getDeepestCategories($startOffSet, $rowCount, $withSpecs){
+		return $this->clientConnect('anonymous','Category','getSubCategories',get_defined_vars());
+	}
+
+	public function searchCatalog($page, $rowCount, $criteria){
+		return $this->clientConnect('anonymous','Catalog','CatalogV2Service',get_defined_vars());
+	}
 	
 	
 	/**
@@ -347,7 +362,7 @@ class ggClient{
 	 * 
 	 * @return object Modified Cities List
 	 */
-	public function getModifiedCities($changeTime = '01/01/2008+00:00:00', $startOffset = 0, $rowCount = 5){
+	public function getModifiedCities($changeTime = '01/01/2008+00:00:00', $startOffset=0 , $rowCount=5 ){
 		return $this->clientConnect('anonymous','City','getModifiedCities',get_defined_vars());
 	}
 	
@@ -663,7 +678,7 @@ class ggClient{
 	 * 
 	 * @return object revizyon fiyati
 	 */
-	public function calculatePriceForRevision($productId = null, $itemId = null){
+	public function calculatePriceForRevision($productId , $itemId = null){
 		return $this->clientConnect('individual','Product','calculatePriceForRevision',get_defined_vars());
 	}
 	
@@ -689,6 +704,48 @@ class ggClient{
 	public function payPrice($voucher,$ccOwnerName,$ccOwnerSurname,$ccNumber,$cvv,$expireMonth,$expireYear){
 		return $this->clientConnect('individual','Product','payPrice',get_defined_vars());
 	}
+
+	public function checkForItemId($itemId=null ){
+		return $this->clientConnect('individual','Product','checkForItemId',get_defined_vars());
+
+	}
+
+public function getItemIdDetails($productIds=array()) {
+
+	return $this->clientConnect('individual','Product','getItemIdDetails',get_defined_vars());
+}
+public function getProductIds( $startOffSet=0, $rowCount=5, $statusTypes=array() ){
+	return $this->clientConnect('individual','Product','getProductIds',get_defined_vars());
+
+}
+public function updateItemId($productId=null){
+
+	return $this->clientConnect('individual','Product','updateItemId',get_defined_vars());
+}
+public function updateMarketPrice($productId=null, $arketPrice=null){
+	
+	return $this->clientConnect('individual','Product','updateMarketPrice',get_defined_vars());
+}
+public function updatePriceByPercentage($productId=null, $itemId=null, $operatorType='+', $percentage=null){
+	return $this->clientConnect('individual','Product','updatePriceByPercentage',get_defined_vars());
+
+
+}
+public function updateProductWithNewCargoDetail($productId,$itemId, $product, $onSale, $forceToSpecEntry,  $nextDateOption){
+	return $this->clientConnect('individual','Product','updateProductWithNewCargoDetail',get_defined_vars());
+}
+public function updateStockAndActivateProduct($productId=null,$itemId=null,$stock=null){
+	return $this->clientConnect('individual','Product','updateStockAndActivateProduct',get_defined_vars());
+
+}
+public function updateVariantStockAndActivateProduct($productId=null, $itemId=null, $variantId=null, $stock=null){
+	return $this->clientConnect('individual','Product','updateVariantStockAndActivateProduct',get_defined_vars());
+
+}
+public function updateVariantStock($productId=null,$itemId=null, $variantId=null,$stock=null){
+	return $this->clientConnect('individual','Product','updateVariantStock',get_defined_vars());
+}
+
 	
 	
 	/**
@@ -792,7 +849,7 @@ class ggClient{
 	 * 
 	 * @return Web Servis mesajini object olarak dondurur
 	 */
-	public function updateStock($productId,$itemId,$stock,$cancelBid){
+	public function updateStock($productId,$itemId=null,$stock,$cancelBid){
 		return $this->clientConnect('individual','Product','updateStock',get_defined_vars());
 	}
 	
@@ -824,7 +881,7 @@ class ggClient{
 	 * 
 	 * @return Web Servis mesajini object olarak dondurur
 	 */
-	public function updateProductVariants($itemId = null, $productId = null, $productVariant){
+	public function updateProductVariants( $productId ,$itemId, $productVariant){
 		return $this->clientConnect('individual','Product','updateProductVariants',get_defined_vars(),array('productVariant'));
 	}
 	
@@ -966,6 +1023,10 @@ class ggClient{
 		return $this->clientConnect('individual','Product','getProductDescription',get_defined_vars());
 	}
 	
+public function insertProductWithNewCargoDetail($itemId, $productType, $forceToSpecEntry, $nextDateOption){
+	return $this->clientConnect('individual','Product','insertProductWithNewCargoDetail',get_defined_vars());
+}
+
 	
 	//End Product Service
 	
@@ -1012,16 +1073,61 @@ class ggClient{
 	 * 
 	 * @return object Sales info
 	 */
-	public function getSales($startOffset = 0,
-							 $rowCount = 5,
-							 $withData = false,
-							 $byStatus = 'R',
-							 $byUser = 'A',
-							 $orderBy = 'C',
-							 $orderType = 'A'){
+	public function getSales($startOffset ,
+							 $rowCount ,
+							 $withData ,
+							 $byStatus ,
+							 $byUser ,
+							 $orderBy ,
+							 $orderType ){
 		//$withData = $this->booleanConvert($withData);
 		return $this->clientConnect('individual','Sale','getSales',get_defined_vars());
 	}
+	public function giveRateAndComment($productId, $rate, $comment){
+		return $this->clientConnect('individual','Sale','giveRateAndComment',get_defined_vars());
+	}
+	public function replySaleComment($productId, $comment){
+		return $this->clientConnect('individual','Sale','replySaleComment',get_defined_vars());
+	}
+	public function remindForApproval($saleCode){
+		return $this->clientConnect('individual','Sale','remindForApproval',get_defined_vars());
+	}
+	public function getPagedSales($pageSize, $pageNumber, $withData, $byStatus, $orderBy, $orderType){
+		return $this->clientConnect('individual','Sale','getPagedSales',get_defined_vars());
+	}
+	public function getReasonsToCancelSales($count, $reason){
+		return $this->clientConnect('individual','Sale','getReasonsToCancelSales',get_defined_vars());
+	}
+	public function cancelSale($saleCode, $reasonId){
+		return $this->clientConnect('individual','Sale','cancelSale',get_defined_vars());
+	}
+	public function getAccountTransactionsV2($startDate, $endDate, $startOffSet, $rowCount){
+		return $this->clientConnect('individual','Sale','getAccountTransactionsV2',get_defined_vars());
+	}
+	public function removeSaleFromList($saleCode, $userType){
+		return $this->clientConnect('individual','Sale','removeSaleFromList',get_defined_vars());
+	}
+	public function getSalesByDateRange($withData, $byStatus, $byUser, $orderBy, $orderType, $startDate, $endDate, $pageNumber, $pageSize){
+		return $this->clientConnect('individual','Sale','getSalesByDateRange',get_defined_vars());
+	}
+	public function getItemBuyers($byStatus, $startOffSet, $rowCount){
+		return $this->clientConnect('individual','Sale','getItemBuyers',get_defined_vars());
+	}
+	public function  receiveRemandedItem($saleCode){
+		return $this->clientConnect('individual','Sale','receiveRemandedItem',get_defined_vars());
+	}
+	public function  giveApprovalForRemandedItem($saleCode){
+		return $this->clientConnect('individual','Sale','giveApprovalForRemandedItem',get_defined_vars());
+	}
+	public function  cancelSaleAfterEarlyCancellationRequest($saleCode){
+		return $this->clientConnect('individual','Sale','cancelSaleAfterEarlyCancellationRequest',get_defined_vars());
+	}
+
+	public function getSaleProcessReport($startDate, $endDate, $startOffSet, $rowCount){
+		return $this->clientConnect('individual','Sale',' getSaleProcessReport',get_defined_vars());
+
+	}
+	
 	
 	//End Sale Service
 		
@@ -1167,8 +1273,12 @@ class ggClient{
 	public function getCargoInformation($saleCode){
 		return $this->clientConnect('individual','Cargo','getCargoInformation',get_defined_vars());
 	}
-	
-	
+	public function createShippingRequest($saleCode,$shippingFirmId){
+		return $this->clientConnect('individual','Cargo','createShippingRequest',get_defined_vars());
+	}
+	public function getCargoCompany(){
+		return $this->clientConnect('individual','Cargo','getCargoCompany',get_defined_vars());
+	}
 	/**
 	 * İlgili satış kodu girildikten sonra, satış bilgisine kargo bilgisi eklemek için kullanılır. Bu metot satıcılar tarafından kullanılır. 
 	 * 
@@ -1185,10 +1295,69 @@ class ggClient{
 		return $this->clientConnect('individual','Cargo','sendCargoInformation',get_defined_vars());
 	}
 	
-	
 	//End Cargo Service
+
+     //ActivityService
+
+	public function getUnsoldItems($startOffset=0, $rowCount=5,$withData=true){
+		return $this->clientConnect('individual','Activity','getUnsoldItems',get_defined_vars());
+
+	}
+	public function getSoldItems($startOffset=0, $rowCount=5,$withData=true){
+		return $this->clientConnect('individual','Activity','getSoldItems',get_defined_vars());
+
+	}
+	public function getWatchItems($startOffset=0, $rowCount=5,$withData=true){
+		return $this->clientConnect('individual','Activity','getWatchItems',get_defined_vars());
+
+	}
+	//endActivityService
+
+	//User Messages Service
+
+	public function getConversations($getConversationsRequest){
+		return $this->clientConnect('individual','UserConversation','getConversations',get_defined_vars());
+
+	}
+	public function getConversationsCount($getConversationsCountRequest){
+		return $this->clientConnect('individual','UserConversation','getConversationsCount',get_defined_vars());
+
+	}
+	public function getMessages($getMessagesRequest){
+		return $this->clientConnect('individual','UserConversation','getMessages',get_defined_vars());
+
+	}
+	public function getConversationById($getConversationByIdRequest){
+		return $this->clientConnect('individual','UserConversation','getConversationById',get_defined_vars());
+
+	}
+	public function postConversation($getConversationByIdRequest){
+		return $this->clientConnect('individual','UserConversation','postConversation',get_defined_vars());
+
+	}
+	public function putMessage($putMessageRequest){
+		return $this->clientConnect('individual','UserConversation','putMessage',get_defined_vars());
+
+	}
+	public function markAsUnread($markAsUnreadRequest){
+		return $this->clientConnect('individual','UserConversation','markAsUnread',get_defined_vars());
+
+	}
+	public function markAsRead($markAsReadRequest){
+		return $this->clientConnect('individual','UserConversation','markAsRead',get_defined_vars());
+
+	}
+	public function deleteConversation($deleteConversationRequest){
+		return $this->clientConnect('individual','UserConversation','deleteConversation',get_defined_vars());
+
+	}
+	public function deleteConversations($deleteConversationsRequest){
+		return $this->clientConnect('individual','UserConversation','deleteConversations',get_defined_vars());
+
+	}
+
 	
-	
+	//end User Message Service
 	
 	//Store Service
 	
@@ -1209,6 +1378,7 @@ class ggClient{
 	}
 	
 	//End Store Service
+	//getCategoriesByCodes
 	
 	
 	
@@ -1280,7 +1450,9 @@ class ggClient{
 		   //var_dump($url);
 	   	$soapParams['lang'] = $this->lang;
 
-		$soapClient = new SoapClient($url, array('login' => $this->auth_user, 'password' => $this->auth_pass, 'authentication' => SOAP_AUTHENTICATION_BASIC));
+		$soapClient = new SoapClient($url, array('login' => $this->auth_user, 
+		'password' => $this->auth_pass, 
+		'authentication' => SOAP_AUTHENTICATION_BASIC));
 		$result = $soapClient->__soapCall($method,$soapParams);
 		
 		return $result;
