@@ -1,9 +1,9 @@
 <?php
-/*
+
 include "../../client.php";
 $client=new ggClient();
-$client->deleteApplication("ASzvDFJ42mPRXphqtmPY");
+$c=$client->deleteApplication("ASzvDFJ42mPRXphqtmPY");
+//Bu metot, sadece tek bir şehir hakkında veriye ulaşılmak istendiğinde kullanılır. Ürün ekleme işlemi sırasında ilgili şehir bilgisinin girilmesi gerektiği için bu bilginin gönderilmesi zorunludur.
+print_r($c);
 
-print_r($client);
-*/
 ?>
