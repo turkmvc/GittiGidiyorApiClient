@@ -10,4 +10,6 @@ $result=$client->createApplication("ASzvDFJ42mPRXphqtmPY",
 "");
 print_r($result);
 
+//Bu metot, GittiGidiyor kullanıcısının kendisini "geliştirici (developer)" olarak sisteme kaydettirmesinin ardından, kullanıcının sistem üzerinde kendi oluşturacağı uygulamaları tanımlayabilmesi için kullanılır. Bir geliştirici birden çok uygulama tanımlayabilir.
+
 ?>
