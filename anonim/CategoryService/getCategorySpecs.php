@@ -1,9 +1,9 @@
 <?php
 
-include "../client.php";
+include "../../client.php";
 $client=new ggClient();
-$client->getCategorySpecs("sgf");
-
-print_r($client);
+$b=$client->getCategorySpecs("gdk");
+//Tek bir kategori ile ilgili "sadece özelliklerin alınması gerektiği durumlarda" kullanılır. Bu metot, ürün ekleme işlemi sırasında girilen kategoriye ait bazı özelliklerin belirtilmesi zorunlu olduğu için önemlidir.
+print_r($b);
 
 ?>
