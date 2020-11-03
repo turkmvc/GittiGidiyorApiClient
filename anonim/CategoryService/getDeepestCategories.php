@@ -1,9 +1,9 @@
 <?php
 
-include "../client.php";
+include "../../client.php";
 $client=new ggClient();
-$client->getProducts();
-
-print_r($client);
+$deneme=$client->getDeepestCategories(2,1,true);
+//GittiGidiyorda yer alan bütün alt kategori bilgilerine ulaşmak için kullanılır.
+print_r($deneme);
 
 ?>
